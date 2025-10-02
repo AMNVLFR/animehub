@@ -23,8 +23,6 @@ namespace AnimeHub.Migrations
                 .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
             modelBuilder.Entity("AnimeHub.Models.Anime", b =>
                 {
                     b.Property<int>("AnimeId")
