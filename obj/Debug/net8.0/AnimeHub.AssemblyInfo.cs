@@ -10,11 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-AnimeHub-2ba8d64d-069e-44d9-b90e-e3377828cb50")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9abcfc10ffbde33591075e09c358ba56a2fb4c25")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90d4739a498d0c590108102b9261e0b8380f2671")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
