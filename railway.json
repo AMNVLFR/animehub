@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": ["dotnet", "AnimeHub.dll"]
+    "startCommand": "dotnet /app/AnimeHub.dll"
   }
 }
