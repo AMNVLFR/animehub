@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+603379a9319a67a787a1746404d788a9d5d5175f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnimeHub")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
