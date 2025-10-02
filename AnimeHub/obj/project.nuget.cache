@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LQ5ku6dlNYo=",
+  "dgSpecHash": "bd+HfKqU/wM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Marlo\\Desktop\\website\\animehub\\AnimeHub.csproj",
+  "projectFilePath": "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\AnimeHub.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Marlo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Marlo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.14\\microsoft.aspnetcore.cryptography.internal.8.0.14.nupkg.sha512",

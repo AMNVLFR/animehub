@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marlo\\Desktop\\website\\animehub\\AnimeHub.csproj": {}
+    "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\AnimeHub.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marlo\\Desktop\\website\\animehub\\AnimeHub.csproj": {
+    "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\AnimeHub.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marlo\\Desktop\\website\\animehub\\AnimeHub.csproj",
+        "projectUniqueName": "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\AnimeHub.csproj",
         "projectName": "AnimeHub",
-        "projectPath": "C:\\Users\\Marlo\\Desktop\\website\\animehub\\AnimeHub.csproj",
+        "projectPath": "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\AnimeHub.csproj",
         "packagesPath": "C:\\Users\\Marlo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marlo\\Desktop\\website\\animehub\\obj\\",
+        "outputPath": "C:\\Users\\Marlo\\Desktop\\website\\AnimeHub\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Marlo\\AppData\\Roaming\\NuGet\\NuGet.Config"
