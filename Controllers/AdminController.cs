@@ -529,5 +529,30 @@ namespace AnimeHub.Controllers
 
             return Json(new { success = false, message = string.Join(", ", result.Errors.Select(e => e.Description)) });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
+            // Prevent deleting the main admin account
+            if (user.Email == "admin@animehub.com")
+            {
+                return Json(new { success = false, message = "Cannot delete the main admin account" });
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["Success"] = $"User {user.UserName} has been deleted";
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false, message = string.Join(", ", result.Errors.Select(e => e.Description)) });
+        }
     }
 }
