@@ -1,0 +1,7 @@
+bin/
+obj/
+.git/
+.vscode/
+*.log
+*.tmp
+anime_data.sql
