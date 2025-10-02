@@ -1,0 +1,20 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "animehubdb",
+            "database": "animehubdb",
+            "username": "root",
+            "password": "123456789",
+            "connectionTimeout": 30
+        }
+    ]
+}

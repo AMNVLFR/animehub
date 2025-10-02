@@ -1,0 +1,165 @@
+@model IEnumerable<AnimeHub.Models.Anime>
+
+@{
+    ViewData["Title"] = "Search Results";
+    var searchQuery = ViewData["SearchQuery"] as string;
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8">
+                <h1 class="text-center mb-3">Search Results</h1>
+                @if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    <p class="text-center text-muted">Showing results for "<strong>@searchQuery</strong>"</p>
+                }
+                <div class="text-center mb-4">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light me-2">
+                        <i class="fas fa-home me-1"></i>Back to Home
+                    </a>
+                    <a href="@Url.Action("Browse", "Home")" class="btn btn-outline-anime">
+                        <i class="fas fa-list me-1"></i>Browse All
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Any())
+        {
+            <!-- Search Results Grid -->
+            <div class="row">
+                @foreach (var anime in Model)
+                {
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
+                        <a href="@Url.Action("Detail", "Home", new { title = anime.Slug })" class="text-decoration-none">
+                            <div class="anime-card h-100">
+                                <div class="card-img-container">
+                                    <img src="@anime.PosterUrl" class="card-img-top" alt="@anime.Title Poster" loading="lazy">
+                                    <div class="card-overlay">
+                                        <button class="btn btn-anime btn-sm"><i class="fas fa-play"></i> Watch</button>
+                                    </div>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <h6 class="card-title mb-1">@anime.Title</h6>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="btn-group-sm">
+                                                <button class="btn btn-sm btn-outline-danger me-1 add-to-favorites" data-anime-id="@anime.AnimeId" title="Add to Favorites"><i class="fas fa-heart"></i></button>
+                                                <button class="btn btn-sm btn-outline-warning me-1 add-to-bookmarks" data-anime-id="@anime.AnimeId" title="Bookmark"><i class="fas fa-bookmark"></i></button>
+                                                <button class="btn btn-sm btn-outline-info add-to-watchlist" data-anime-id="@anime.AnimeId" title="Add to Watchlist"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <small class="text-muted">@anime.EpisodeCount Episodes</small>
+                                        <span class="badge @(anime.Status == "Ongoing" ? "bg-success" : "bg-secondary")">@anime.Status</span>
+                                    </div>
+                                    <div class="genre-tags">
+                                         @if (anime.AnimeGenres != null && anime.AnimeGenres.Any())
+                                         {
+                                             @foreach (var animeGenre in anime.AnimeGenres.Take(2))
+                                             {
+                                                 <span class="badge bg-secondary me-1">@animeGenre.Genre?.Name</span>
+                                             }
+                                         }
+                                     </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <!-- No Results Found -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card text-center">
+                        <div class="card-body py-5">
+                            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                            <h4 class="card-title">No Results Found</h4>
+                            <p class="card-text text-muted">
+                                We couldn't find any anime matching "<strong>@searchQuery</strong>".
+                                Try searching for a different title, genre, or keyword.
+                            </p>
+                            <div class="mt-4">
+                                <a href="@Url.Action("Browse", "Home")" class="btn btn-anime me-2">
+                                    <i class="fas fa-list me-1"></i>Browse All Anime
+                                </a>
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light">
+                                    <i class="fas fa-home me-1"></i>Go Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.add-to-watchlist').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToWatchlist', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-info').addClass('btn-success');
+                        setTimeout(function() {
+                            button.removeClass('btn-success').addClass('btn-outline-info');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to watchlist'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to watchlist');
+                });
+            });
+
+            $('.add-to-favorites').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToFavorites', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-danger').addClass('btn-danger');
+                        setTimeout(function() {
+                            button.removeClass('btn-danger').addClass('btn-outline-danger');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to favorites'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to favorites');
+                });
+            });
+
+            $('.add-to-bookmarks').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToBookmarks', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-warning').addClass('btn-warning');
+                        setTimeout(function() {
+                            button.removeClass('btn-warning').addClass('btn-outline-warning');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to bookmarks'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to bookmarks');
+                });
+            });
+        });
+    </script>
+}

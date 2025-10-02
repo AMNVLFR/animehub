@@ -1,0 +1,289 @@
+@model AnimeHub.Models.Episode
+
+@{
+    ViewData["Title"] = $"Episode {Model.EpisodeNumber}: {Model.Title}";
+}
+
+<div class="watch-page" style="background-color: #121212; min-height: 100vh;">
+    <div class="container-fluid px-0">
+        <!-- Video Section - Full Width -->
+        <div class="video-section" style="background-color: #000000; padding: 20px 0;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <!-- Episode Info -->
+                        <div class="episode-info text-center mb-4" style="color: #ffffff;">
+                            <h1 class="display-5 fw-bold mb-2">@Model.Anime?.Title</h1>
+                            <h3 class="mb-3">Episode @Model.EpisodeNumber: @Model.Title</h3>
+                            @if (Model.AirDate.HasValue)
+                            {
+                                <p class="text-muted mb-0">Aired: @Model.AirDate.Value.ToString("MMMM dd, yyyy")</p>
+                            }
+                        </div>
+
+                        <!-- Video Player -->
+                        @if (!string.IsNullOrEmpty(Model.VideoUrl) && AnimeHub.Helpers.VideoHelper.IsValidVideoUrl(Model.VideoUrl))
+                        {
+                            var embedUrl = AnimeHub.Helpers.VideoHelper.GetEmbedUrl(Model.VideoUrl);
+                            <div class="video-player-container">
+                                <iframe src="@embedUrl"
+                                        width="100%"
+                                        height="800"
+                                        allowfullscreen
+                                        allow="autoplay; encrypted-media"
+                                        style="border: none; border-radius: 0; max-width: 100%;">
+                                </iframe>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <div class="alert alert-warning" style="background-color: #2c2c2c; border-color: #ff6b6b; color: #ffffff;">
+                                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                                    <span class="h4">Video not available for this episode.</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation and Episode List Section -->
+        <div class="content-section" style="background-color: #121212; padding: 40px 0;">
+            <div class="container">
+                <!-- Navigation Buttons -->
+                <div class="d-flex justify-content-center align-items-center mb-5">
+                    <a href="@Url.Action("Detail", "Home", new { title = Model.Anime?.Slug })" class="btn btn-anime btn-lg me-3">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Anime
+                    </a>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-light btn-lg me-2" id="prev-episode">
+                            <i class="fas fa-chevron-left me-2"></i>Previous Episode
+                        </button>
+                        <button class="btn btn-outline-light btn-lg" id="next-episode">
+                            Next Episode<i class="fas fa-chevron-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Episode List -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card" style="background-color: #1e1e1e; border: 1px solid #495057;">
+                            <div class="card-header" style="background-color: #2c2c2c; border-bottom: 1px solid #495057;">
+                                <h4 class="mb-0" style="color: #ff6b6b;">Episode List</h4>
+                            </div>
+                            <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                                <div id="episode-list" class="episode-grid">
+                                    <!-- Episode list will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .episode-card {
+            background: #2c2c2c;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 120px;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        .episode-item-current {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252) !important;
+            border-color: #ff6b6b !important;
+            color: white !important;
+        }
+
+        .episode-item-current:hover {
+            background: linear-gradient(135deg, #ff5252, #ff3838) !important;
+        }
+
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .episode-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .episode-item-current .episode-number {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .episode-content {
+            flex-grow: 1;
+        }
+
+        .episode-title {
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .episode-item-current .episode-title {
+            color: white;
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: #cccccc;
+        }
+
+        .episode-item-current .episode-meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .episode-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .episode-play {
+            align-self: flex-end;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+
+        .episode-item-current .episode-play {
+            color: white;
+        }
+
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-player-container iframe {
+            display: block;
+            margin: 0 auto;
+        }
+
+        @@media (max-width: 768px) {
+            .episode-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-player-container iframe {
+                height: 400px !important;
+            }
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            var currentEpisodeId = @Model.EpisodeId;
+            var animeId = @Model.AnimeId;
+            var episodes = [];
+            var currentIndex = -1;
+            var prevEpisodeId = null;
+            var nextEpisodeId = null;
+
+            loadEpisodeList();
+
+            function loadEpisodeList() {
+                $.get('/Home/GetEpisodes', { animeId: animeId }, function(data) {
+                    episodes = data;
+                    var html = '';
+                    episodes.forEach(function(episode, index) {
+                        if (episode.episodeId === currentEpisodeId) {
+                            currentIndex = index;
+                        }
+                        var isCurrent = episode.episodeId === currentEpisodeId;
+                        var cssClass = isCurrent ? 'episode-item-current' : 'episode-item-normal';
+                        var playIcon = episode.videoUrl ? '<i class="fas fa-play me-2"></i>' : '<i class="fas fa-lock me-2"></i>';
+                        var statusBadge = episode.videoUrl ? '<span class="badge bg-success ms-2">Available</span>' : '<span class="badge bg-secondary ms-2">Coming Soon</span>';
+
+                        html += `
+                            <div class="episode-card ${cssClass}" onclick="watchEpisode(${episode.episodeId})">
+                                <div class="episode-header">
+                                    <div class="episode-number">${episode.episodeNumber}</div>
+                                    ${statusBadge}
+                                </div>
+                                <div class="episode-content">
+                                    <h6 class="episode-title">${episode.title || 'Episode ' + episode.episodeNumber}</h6>
+                                    <div class="episode-meta">
+                                        ${episode.duration ? '<span><i class="fas fa-clock me-1"></i>' + episode.duration + '</span>' : ''}
+                                        ${episode.airDate ? '<span><i class="fas fa-calendar me-1"></i>' + new Date(episode.airDate).toLocaleDateString() + '</span>' : ''}
+                                    </div>
+                                </div>
+                                <div class="episode-play">
+                                    ${playIcon}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    $('#episode-list').html(html);
+
+                    // Set prev and next
+                    if (currentIndex > 0) {
+                        prevEpisodeId = episodes[currentIndex - 1].episodeId;
+                    }
+                    if (currentIndex < episodes.length - 1) {
+                        nextEpisodeId = episodes[currentIndex + 1].episodeId;
+                    }
+                });
+            }
+
+            window.watchEpisode = function(episodeId) {
+                window.location.href = '/Home/WatchEpisode?episodeId=' + episodeId;
+            };
+
+            $('#prev-episode').click(function() {
+                if (prevEpisodeId) {
+                    window.location.href = '/Home/WatchEpisode?episodeId=' + prevEpisodeId;
+                } else {
+                    alert('No previous episode available');
+                }
+            });
+
+            $('#next-episode').click(function() {
+                if (nextEpisodeId) {
+                    window.location.href = '/Home/WatchEpisode?episodeId=' + nextEpisodeId;
+                } else {
+                    alert('No next episode available');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@using System.Security.Claims
+
+<ul class="navbar-nav">
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @if (!string.IsNullOrEmpty(User.FindFirst("AvatarUrl")?.Value))
+            {
+                <img src="@User.FindFirst("AvatarUrl")?.Value" class="rounded-circle me-2" style="width: 30px; height: 30px;" alt="Avatar">
+            }
+            else
+            {
+                <i class="fas fa-user me-1"></i>
+            }
+            @User.Identity?.Name
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a class="dropdown-item text-warning" asp-controller="Admin" asp-action="Index"><i class="fas fa-cog me-2"></i>Admin Panel</a></li>
+                <li><hr class="dropdown-divider"></li>
+            }
+            <li><a class="dropdown-item" asp-controller="Home" asp-action="Dashboard"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+            <li><a class="dropdown-item" asp-controller="Home" asp-action="Bookmarks"><i class="fas fa-bookmark me-2"></i>My Bookmarks</a></li>
+            <li><a class="dropdown-item" asp-controller="Home" asp-action="Favorites"><i class="fas fa-heart me-2"></i>My Favorites</a></li>
+            <li><a class="dropdown-item" asp-controller="Home" asp-action="Watchlist"><i class="fas fa-list me-2"></i>Watchlist</a></li>
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="EditProfile"><i class="fas fa-user-edit me-2"></i>Edit Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form class="dropdown-item mb-0 p-0" asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-link text-decoration-none text-dark w-100 text-start ps-3 pe-3">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-white" asp-controller="Account" asp-action="Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+}
+</ul>

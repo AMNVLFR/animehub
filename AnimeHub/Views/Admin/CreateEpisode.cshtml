@@ -1,0 +1,77 @@
+@model AnimeHub.Models.Episode
+
+@{
+    ViewData["Title"] = "Create Episode";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="dashboard-card">
+                <h2 class="mb-4">Create New Episode</h2>
+
+                <form asp-action="CreateEpisode" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="AnimeId" class="form-label">Anime</label>
+                        <select asp-for="AnimeId" class="form-select" asp-items="ViewBag.AnimeId" required>
+                            <option value="">Select an anime...</option>
+                        </select>
+                        <span asp-validation-for="AnimeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EpisodeNumber" class="form-label">Episode Number</label>
+                        <input asp-for="EpisodeNumber" class="form-control" type="number" min="1" required />
+                        <span asp-validation-for="EpisodeNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Episode Title</label>
+                        <input asp-for="Title" class="form-control" placeholder="e.g., The New Threat" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="VideoUrl" class="form-label">Video Embed URL</label>
+                        <textarea asp-for="VideoUrl" class="form-control" rows="4"
+                                  placeholder="Paste your iframe embed code here, e.g.,&#10;<iframe src="https://example.com/embed/..." ...></iframe>"></textarea>
+                        <div class="form-text">Paste the complete iframe embed code from your video hosting service.</div>
+                        <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="AirDate" class="form-label">Air Date</label>
+                                <input asp-for="AirDate" class="form-control" type="date" />
+                                <span asp-validation-for="AirDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Duration" class="form-label">Duration</label>
+                                <input asp-for="Duration" class="form-control" placeholder="e.g., 24 min" />
+                                <span asp-validation-for="Duration" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-anime">
+                            <i class="fas fa-save"></i> Create Episode
+                        </button>
+                        <a href="@Url.Action("Episodes", "Admin")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Episodes
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

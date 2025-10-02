@@ -1,0 +1,232 @@
+@{
+    ViewData["Title"] = "Genres";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-center mb-5">Browse by Genre</h1>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "action" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-fist-raised fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Action</h5>
+                            <small class="text-muted">High-energy battles and adventures</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "adventure" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-compass fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Adventure</h5>
+                            <small class="text-muted">Epic journeys and explorations</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "comedy" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-laugh fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Comedy</h5>
+                            <small class="text-muted">Funny and light-hearted stories</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "drama" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-theater-masks fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Drama</h5>
+                            <small class="text-muted">Emotional and character-driven</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "fantasy" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-magic fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Fantasy</h5>
+                            <small class="text-muted">Magical worlds and creatures</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "horror" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-ghost fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Horror</h5>
+                            <small class="text-muted">Scary and supernatural themes</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "romance" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-heart fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Romance</h5>
+                            <small class="text-muted">Love stories and relationships</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "Sci-Fi" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-robot fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Sci-Fi</h5>
+                            <small class="text-muted">Futuristic and technological</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "supernatural" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-moon fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Supernatural</h5>
+                            <small class="text-muted">Ghosts, spirits, and paranormal</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "psychological" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-brain fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Psychological</h5>
+                            <small class="text-muted">Mind-bending and intense</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "superhero" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-shield-alt fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Superhero</h5>
+                            <small class="text-muted">Heroes with special powers</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "thriller" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-gavel fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Thriller</h5>
+                            <small class="text-muted">Suspenseful and mysterious</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "Martial Arts" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-user-ninja fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Martial Arts</h5>
+                            <small class="text-muted">Fighting and combat skills</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "School" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-school fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">School</h5>
+                            <small class="text-muted">School life and education</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "mecha" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-cogs fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Mecha</h5>
+                            <small class="text-muted">Giant robots and machines</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "Slice of Life" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-home fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Slice of Life</h5>
+                            <small class="text-muted">Everyday life and relationships</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "mystery" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-search fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Mystery</h5>
+                            <small class="text-muted">Puzzles and investigations</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "historical" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-landmark fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Historical</h5>
+                            <small class="text-muted">Based on real historical events</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "sports" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-trophy fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Sports</h5>
+                            <small class="text-muted">Athletic competitions and training</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="@Url.Action("Browse", "Home", new { genre = "isekai" })" class="genre-card text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="fas fa-magic fa-3x text-anime mb-3"></i>
+                            <h5 class="card-title">Isekai</h5>
+                            <small class="text-muted">Transported to another world</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

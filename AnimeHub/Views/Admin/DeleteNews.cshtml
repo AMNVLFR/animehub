@@ -1,0 +1,63 @@
+@model AnimeHub.Models.News
+
+@{
+    ViewData["Title"] = "Delete News Article";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="dashboard-card">
+                <h2 class="mb-4 text-danger">Delete News Article</h2>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning!</strong> This action cannot be undone. Are you sure you want to delete this news article?
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Article Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Title:</dt>
+                            <dd class="col-sm-9">@Model.Title</dd>
+
+                            <dt class="col-sm-3">Author:</dt>
+                            <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Author) ? "Anonymous" : Model.Author)</dd>
+
+                            <dt class="col-sm-3">Published:</dt>
+                            <dd class="col-sm-9">@Model.PublishedAt.ToString("MMM dd, yyyy 'at' HH:mm")</dd>
+
+                            <dt class="col-sm-3">Content Preview:</dt>
+                            <dd class="col-sm-9">
+                                @if (!string.IsNullOrEmpty(Model.Content))
+                                {
+                                    @(Model.Content.Length > 200 ? Model.Content.Substring(0, 200) + "..." : Model.Content)
+                                }
+                                else
+                                {
+                                    <em class="text-muted">No content</em>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <form asp-action="DeleteNews" method="post" class="d-inline">
+                        <input type="hidden" asp-for="NewsId" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>Yes, Delete Article
+                        </button>
+                    </form>
+
+                    <a href="@Url.Action("News", "Admin")" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

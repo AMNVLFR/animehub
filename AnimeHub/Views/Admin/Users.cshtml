@@ -1,0 +1,156 @@
+@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>User Management</h2>
+                    <span class="badge bg-info">@Model.Count() total users</span>
+                </div>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.Id</td>
+                                    <td>@($"{user.FirstName} {user.LastName}".Trim())</td>
+                                    <td>@user.Email</td>
+                                    <td>
+                                        @if (user.Roles != null && ((IList<string>)user.Roles).Any())
+                                        {
+                                            @foreach (var role in (IList<string>)user.Roles)
+                                            {
+                                                <span class="badge bg-primary me-1">@role</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No roles</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewUserDetails('@user.Id')">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                            @if (!((IList<string>)user.Roles).Contains("Admin"))
+                                            {
+                                                <button class="btn btn-outline-warning" onclick="promoteToAdmin('@user.Id')">
+                                                    <i class="fas fa-user-shield"></i> Make Admin
+                                                </button>
+                                            }
+                                            else if (user.Email != "admin@animehub.com" && ((IList<string>)user.Roles).Contains("Admin"))
+                                            {
+                                                <button class="btn btn-outline-secondary" onclick="demoteFromAdmin('@user.Id')">
+                                                    <i class="fas fa-user-times"></i> Remove Admin
+                                                </button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No users found</h4>
+                        <p class="text-muted">Users will appear here once they register.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Details Modal -->
+<div class="modal fade" id="userDetailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">User Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="userDetailsContent">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function viewUserDetails(userId) {
+            // For now, just show a placeholder
+            document.getElementById('userDetailsContent').innerHTML = '<p>User details functionality coming soon...</p>';
+            new bootstrap.Modal(document.getElementById('userDetailsModal')).show();
+        }
+
+        function promoteToAdmin(userId) {
+            if (confirm('Are you sure you want to promote this user to Admin?')) {
+                // AJAX call to promote user
+                fetch('/Admin/PromoteToAdmin/' + userId, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                });
+            }
+        }
+
+        function demoteFromAdmin(userId) {
+            if (confirm('Are you sure you want to remove Admin privileges from this user?')) {
+                // AJAX call to demote user
+                fetch('/Admin/DemoteFromAdmin/' + userId, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                });
+            }
+        }
+    </script>
+}

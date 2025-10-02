@@ -1,0 +1,187 @@
+@model AnimeHub.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Welcome Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-2">Welcome back, @Model.UserName!</h1>
+                <p class="text-muted">Ready to continue your anime journey?</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a asp-controller="Account" asp-action="EditProfile" class="btn btn-outline-primary">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Summary -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="dashboard-card text-center">
+            <div class="profile-avatar mb-3">
+                <i class="fas fa-user-circle fa-4x text-anime"></i>
+            </div>
+            <h4>@Model.UserName</h4>
+            <p class="text-muted">@Model.Email</p>
+            @if (!string.IsNullOrEmpty(Model.FirstName) || !string.IsNullOrEmpty(Model.LastName))
+            {
+                <p>@(Model.FirstName ?? "") @(Model.LastName ?? "")</p>
+            }
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="dashboard-card">
+            <h3>Profile Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+                        <dt class="col-sm-4">Username</dt>
+                        <dd class="col-sm-8">@Model.UserName</dd>
+                        <dt class="col-sm-4">First Name</dt>
+                        <dd class="col-sm-8">@(Model.FirstName ?? "Not set")</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Last Name</dt>
+                        <dd class="col-sm-8">@(Model.LastName ?? "Not set")</dd>
+                        <dt class="col-sm-4">Bio</dt>
+                        <dd class="col-sm-8">@(Model.Bio ?? "No bio yet")</dd>
+                        <dt class="col-sm-4">Birthday</dt>
+                        <dd class="col-sm-8">@(Model.DateOfBirth?.ToString("MMM dd, yyyy") ?? "Not set")</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats and Activity -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-icon mb-2">
+                <i class="fas fa-eye fa-2x text-anime"></i>
+            </div>
+            <h2 class="stat-number">@ViewBag.WatchlistCount</h2>
+            <p class="stat-label">Watchlist</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-icon mb-2">
+                <i class="fas fa-heart fa-2x text-anime"></i>
+            </div>
+            <h2 class="stat-number">@ViewBag.FavoritesCount</h2>
+            <p class="stat-label">Favorites</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-icon mb-2">
+                <i class="fas fa-star fa-2x text-anime"></i>
+            </div>
+            <h2 class="stat-number">@ViewBag.BookmarksCount</h2>
+            <p class="stat-label">Bookmarks</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-icon mb-2">
+                <i class="fas fa-users fa-2x text-anime"></i>
+            </div>
+            <h2 class="stat-number">0</h2>
+            <p class="stat-label">Following</p>
+        </div>
+    </div>
+</div>
+
+<!-- Favorite Anime Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="dashboard-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>My Favorite Anime</h3>
+                <a asp-action="Favorites" class="btn btn-anime btn-sm">View All</a>
+            </div>
+            <div class="row">
+                @if (ViewBag.FavoriteAnime != null && ViewBag.FavoriteAnime.Count > 0)
+                {
+                    foreach (var anime in ViewBag.FavoriteAnime)
+                    {
+                        <div class="col-md-3 mb-3">
+                            <div class="anime-card h-100">
+                                <a asp-action="Detail" asp-route-title="@anime.Slug" class="text-decoration-none">
+                                    <div class="card-img-placeholder">
+                                        @if (!string.IsNullOrEmpty(anime.CoverUrl))
+                                        {
+                                            <img src="@anime.CoverUrl" alt="@anime.Title" class="card-img-top">
+                                        }
+                                        else
+                                        {
+                                            <span class="placeholder-text">Anime Image</span>
+                                        }
+                                    </div>
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title mb-1">@anime.Title</h6>
+                                        <div class="rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= Math.Floor(anime.Rating))
+                                                {
+                                                    <i class="fas fa-star text-warning"></i>
+                                                }
+                                                else if (i - 0.5 <= anime.Rating)
+                                                {
+                                                    <i class="fas fa-star-half-alt text-warning"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-star text-warning"></i>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No favorite anime yet. Start adding some!</p>
+                        <a asp-action="Index" class="btn btn-anime">Browse Anime</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row">
+    <div class="col-12">
+        <div class="dashboard-card">
+            <h3>Recent Activity</h3>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <i class="fas fa-circle text-anime me-2"></i>
+                    <span>Welcome to AnimeHub! Start exploring anime series.</span>
+                    <small class="text-muted ms-2">Just now</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary">Back to Home</a>
+</div>

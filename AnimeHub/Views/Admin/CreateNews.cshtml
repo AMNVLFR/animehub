@@ -1,0 +1,93 @@
+@model AnimeHub.Models.News
+
+@{
+    ViewData["Title"] = "Create News Article";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="dashboard-card">
+                <h2 class="mb-4">Create News Article</h2>
+
+                <form asp-action="CreateNews" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Title *</label>
+                        <input asp-for="Title" class="form-control" required />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Author" class="form-label">Author</label>
+                        <input asp-for="Author" class="form-control" placeholder="Admin" />
+                        <div class="form-text">Leave empty to default to "Admin"</div>
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ImageUrl" class="form-label">Image URL</label>
+                        <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                        <div class="form-text">Optional: Add an image URL for the news article</div>
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NewsType" class="form-label">News Type</label>
+                        <select asp-for="NewsType" class="form-select">
+                            <option value="@AnimeHub.Models.NewsType.Internal">Internal (Forum Discussion)</option>
+                            <option value="@AnimeHub.Models.NewsType.External">External Link</option>
+                        </select>
+                        <div class="form-text">Internal news creates a forum for discussion, External news links to another website</div>
+                        <span asp-validation-for="NewsType" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3" id="linkUrlField" style="display: none;">
+                        <label asp-for="LinkUrl" class="form-label">External Link URL</label>
+                        <input asp-for="LinkUrl" class="form-control" placeholder="https://external-site.com/news-article" />
+                        <div class="form-text">Required for external news: URL where users will be redirected</div>
+                        <span asp-validation-for="LinkUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label">Content *</label>
+                        <textarea asp-for="Content" class="form-control" rows="10" required
+                                  placeholder="Write your news article content here..."></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-anime">
+                            <i class="fas fa-save"></i> Publish Article
+                        </button>
+                        <a href="@Url.Action("News", "Admin")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to News
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsTypeSelect = document.getElementById('NewsType');
+            const linkUrlField = document.getElementById('linkUrlField');
+
+            function toggleLinkUrlField() {
+                if (newsTypeSelect.value === 'External') {
+                    linkUrlField.style.display = 'block';
+                } else {
+                    linkUrlField.style.display = 'none';
+                }
+            }
+
+            newsTypeSelect.addEventListener('change', toggleLinkUrlField);
+            toggleLinkUrlField(); // Initial check
+        });
+    </script>
+}

@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-card">
+                <h2 class="mb-4">Admin Dashboard</h2>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-play-circle fa-3x text-anime mb-3"></i>
+                                <h5 class="card-title">Episode Management</h5>
+                                <p class="card-text">Upload and manage anime episodes</p>
+                                <a href="@Url.Action("Episodes", "Admin")" class="btn btn-anime">Manage Episodes</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tv fa-3x text-anime mb-3"></i>
+                                <h5 class="card-title">Anime Management</h5>
+                                <p class="card-text">Manage anime titles and information</p>
+                                <a href="@Url.Action("Animes", "Admin")" class="btn btn-anime">Manage Animes</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-3x text-anime mb-3"></i>
+                                <h5 class="card-title">User Management</h5>
+                                <p class="card-text">Manage user accounts and roles</p>
+                                <a href="@Url.Action("Users", "Admin")" class="btn btn-anime">Manage Users</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-newspaper fa-3x text-anime mb-3"></i>
+                                <h5 class="card-title">News Management</h5>
+                                <p class="card-text">Create and manage news articles</p>
+                                <a href="@Url.Action("News", "Admin")" class="btn btn-anime">Manage News</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

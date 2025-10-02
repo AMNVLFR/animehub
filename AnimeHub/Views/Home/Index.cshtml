@@ -1,0 +1,265 @@
+﻿@model IEnumerable<AnimeHub.Models.AnimeViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Featured Banner/Carousel -->
+<section class="featured-banner position-relative">
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="featured-slide" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/attack_on_titan.jpg') center/cover;">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold text-white mb-3">Attack on Titan</h1>
+                                <p class="lead text-white mb-4">Humanity's fight against giant creatures in a post-apocalyptic world.</p>
+                                <div class="d-flex gap-3">
+                                    <a href="@(Model.FirstOrDefault(a => a.Slug == "attack-on-titan")?.HasEpisodes == true ?
+                                        Url.Action("WatchEpisode", "Home", new { episodeId = Model.FirstOrDefault(a => a.Slug == "attack-on-titan")?.FirstEpisodeId }) :
+                                        Url.Action("Detail", "Home", new { title = "attack-on-titan" }))" class="btn btn-anime btn-lg"><i class="fas fa-play me-2"></i>Watch Now</a>
+                                    <a href="@Url.Action("Detail", "Home", new { title = "attack-on-titan" })" class="btn btn-outline-light btn-lg">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="featured-slide" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/one_piece.jpg') center/cover;">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold text-white mb-3">One Piece</h1>
+                                <p class="lead text-white mb-4">Follow Luffy's epic adventure to become the Pirate King.</p>
+                                <div class="d-flex gap-3">
+                                    <a href="@(Model.FirstOrDefault(a => a.Slug == "one-piece")?.HasEpisodes == true ?
+                                        Url.Action("WatchEpisode", "Home", new { episodeId = Model.FirstOrDefault(a => a.Slug == "one-piece")?.FirstEpisodeId }) :
+                                        Url.Action("Detail", "Home", new { title = "one-piece" }))" class="btn btn-anime btn-lg"><i class="fas fa-play me-2"></i>Watch Now</a>
+                                    <a href="@Url.Action("Detail", "Home", new { title = "one-piece" })" class="btn btn-outline-light btn-lg">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="featured-slide" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/demon_slayer.jpg') center/cover;">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold text-white mb-3">Demon Slayer</h1>
+                                <p class="lead text-white mb-4">A young boy's journey to save his sister and defeat demons.</p>
+                                <div class="d-flex gap-3">
+                                    <a href="@(Model.FirstOrDefault(a => a.Slug == "demon-slayer")?.HasEpisodes == true ?
+                                        Url.Action("WatchEpisode", "Home", new { episodeId = Model.FirstOrDefault(a => a.Slug == "demon-slayer")?.FirstEpisodeId }) :
+                                        Url.Action("Detail", "Home", new { title = "demon-slayer" }))" class="btn btn-anime btn-lg"><i class="fas fa-play me-2"></i>Watch Now</a>
+                                    <a href="@Url.Action("Detail", "Home", new { title = "demon-slayer" })" class="btn btn-outline-light btn-lg">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="featured-slide" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/dragon_ball_z.jpg') center/cover;">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold text-white mb-3">Dragon Ball Z</h1>
+                                <p class="lead text-white mb-4">Goku and his friends defend Earth from powerful villains and otherworldly threats.</p>
+                                <div class="d-flex gap-3">
+                                    <a href="@(Model.FirstOrDefault(a => a.Slug == "dragon-ball-z")?.HasEpisodes == true ?
+                                        Url.Action("WatchEpisode", "Home", new { episodeId = Model.FirstOrDefault(a => a.Slug == "dragon-ball-z")?.FirstEpisodeId }) :
+                                        Url.Action("Detail", "Home", new { title = "dragon-ball-z" }))" class="btn btn-anime btn-lg"><i class="fas fa-play me-2"></i>Watch Now</a>
+                                    <a href="@Url.Action("Detail", "Home", new { title = "dragon-ball-z" })" class="btn btn-outline-light btn-lg">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="featured-slide" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/naruto.jpg') center/cover;">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold text-white mb-3">Naruto</h1>
+                                <p class="lead text-white mb-4">A young ninja's journey to become the strongest ninja and leader of his village.</p>
+                                <div class="d-flex gap-3">
+                                    <a href="@(Model.FirstOrDefault(a => a.Slug == "naruto")?.HasEpisodes == true ?
+                                        Url.Action("WatchEpisode", "Home", new { episodeId = Model.FirstOrDefault(a => a.Slug == "naruto")?.FirstEpisodeId }) :
+                                        Url.Action("Detail", "Home", new { title = "naruto" }))" class="btn btn-anime btn-lg"><i class="fas fa-play me-2"></i>Watch Now</a>
+                                    <a href="@Url.Action("Detail", "Home", new { title = "naruto" })" class="btn btn-outline-light btn-lg">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<!-- Search Bar Section -->
+<section class="py-4 bg-dark">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form class="d-flex" role="search" asp-controller="Home" asp-action="Search" method="get">
+                    <input class="form-control form-control-lg me-2" type="search" name="query" placeholder="Search for anime..." aria-label="Search" required>
+                    <button class="btn btn-anime btn-lg" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-center mb-4">
+            <div class="btn-group" role="group" aria-label="Categories">
+                <a href="#popular" class="btn btn-outline-anime active">Popular</a>
+                <a href="#new-episodes" class="btn btn-outline-anime">New Episodes</a>
+                <a href="#trending" class="btn btn-outline-anime">Trending</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Anime Grid -->
+<section class="py-5" id="popular">
+    <div class="container">
+        <h2 class="text-center mb-4">Popular Anime</h2>
+        <div class="row">
+            @foreach (var anime in Model)
+            {
+                <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
+                    <a href="@Url.Action("Detail", "Home", new { title = anime.Slug })" class="text-decoration-none">
+                        <div class="anime-card h-100">
+                            <div class="card-img-container">
+                                <img src="@anime.PosterUrl" class="card-img-top" alt="@anime.Title Poster" loading="lazy">
+                                <div class="card-overlay">
+                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                        <i class="fas fa-play-circle fa-2x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-2">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="card-title mb-1">@anime.Title</h6>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="btn-group-sm">
+                                            <button class="btn btn-sm btn-outline-danger me-1 add-to-favorites" data-anime-id="@anime.AnimeId" title="Add to Favorites"><i class="fas fa-heart"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning me-1 add-to-bookmarks" data-anime-id="@anime.AnimeId" title="Bookmark"><i class="fas fa-bookmark"></i></button>
+                                            <button class="btn btn-sm btn-outline-info add-to-watchlist" data-anime-id="@anime.AnimeId" title="Add to Watchlist"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <small class="text-muted">@anime.EpisodeCount Episodes</small>
+                                    <span class="badge @(anime.Status == "Ongoing" ? "bg-success" : "bg-secondary")">@anime.Status</span>
+                                </div>
+                                <div class="genre-tags">
+                                    @if (anime.AnimeGenres != null && anime.AnimeGenres.Any())
+                                    {
+                                        @foreach (var animeGenre in anime.AnimeGenres.Take(2))
+                                        {
+                                            <span class="badge bg-secondary me-1">@animeGenre.Genre?.Name</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" class="btn btn-anime position-fixed" style="bottom: 20px; right: 20px; display: none; z-index: 1000;">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.add-to-watchlist').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToWatchlist', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-info').addClass('btn-success');
+                        setTimeout(function() {
+                            button.removeClass('btn-success').addClass('btn-outline-info');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to watchlist'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to watchlist');
+                });
+            });
+
+            $('.add-to-favorites').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToFavorites', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-danger').addClass('btn-danger');
+                        setTimeout(function() {
+                            button.removeClass('btn-danger').addClass('btn-outline-danger');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to favorites'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to favorites');
+                });
+            });
+
+            $('.add-to-bookmarks').click(function(e) {
+                e.preventDefault();
+                var animeId = $(this).data('anime-id');
+                var button = $(this);
+
+                $.post('/Home/AddToBookmarks', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-warning').addClass('btn-warning');
+                        setTimeout(function() {
+                            button.removeClass('btn-warning').addClass('btn-outline-warning');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to bookmarks'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to bookmarks');
+                });
+            });
+        });
+    </script>
+}

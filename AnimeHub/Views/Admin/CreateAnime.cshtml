@@ -1,0 +1,126 @@
+@model AnimeHub.Models.Anime
+
+@{
+    ViewData["Title"] = "Create Anime";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="dashboard-card">
+                <h2 class="mb-4">Create New Anime</h2>
+
+                <form asp-action="CreateAnime" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Title *</label>
+                        <input asp-for="Title" class="form-control" required />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="form-label">Slug</label>
+                        <input asp-for="Slug" class="form-control" placeholder="auto-generated-from-title" />
+                        <div class="form-text">Leave empty to auto-generate from title</div>
+                        <span asp-validation-for="Slug" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Synopsis" class="form-label">Synopsis</label>
+                        <textarea asp-for="Synopsis" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Synopsis" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Year" class="form-label">Year</label>
+                                <input asp-for="Year" class="form-control" placeholder="e.g., 2023-2024" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Rating" class="form-label">Rating</label>
+                                <input asp-for="Rating" class="form-control" type="number" step="0.1" min="0" max="10" />
+                                <span asp-validation-for="Rating" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Status" class="form-label">Status</label>
+                                <select asp-for="Status" class="form-select">
+                                    <option value="">Select status...</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Hiatus">Hiatus</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="EpisodeCount" class="form-label">Episode Count</label>
+                                <input asp-for="EpisodeCount" class="form-control" placeholder="e.g., 12" />
+                                <span asp-validation-for="EpisodeCount" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Studio" class="form-label">Studio</label>
+                        <input asp-for="Studio" class="form-control" placeholder="e.g., MAPPA" />
+                        <span asp-validation-for="Studio" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Genres</label>
+                        <select multiple class="form-select" name="selectedGenres">
+                            @foreach (var genre in ViewBag.Genres as MultiSelectList)
+                            {
+                                <option value="@genre.Value">@genre.Text</option>
+                            }
+                        </select>
+                        <div class="form-text">Hold Ctrl (Cmd on Mac) to select multiple genres</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CoverUrl" class="form-label">Cover Image URL</label>
+                        <input asp-for="CoverUrl" class="form-control" type="url" placeholder="https://..." />
+                        <span asp-validation-for="CoverUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PosterUrl" class="form-label">Poster Image URL</label>
+                        <input asp-for="PosterUrl" class="form-control" type="url" placeholder="https://..." />
+                        <span asp-validation-for="PosterUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TrailerUrl" class="form-label">Trailer URL</label>
+                        <input asp-for="TrailerUrl" class="form-control" type="url" placeholder="https://..." />
+                        <span asp-validation-for="TrailerUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-anime">
+                            <i class="fas fa-save"></i> Create Anime
+                        </button>
+                        <a href="@Url.Action("Animes", "Admin")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Animes
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

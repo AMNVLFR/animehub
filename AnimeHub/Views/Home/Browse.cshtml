@@ -1,0 +1,208 @@
+@model IEnumerable<AnimeHub.Models.AnimeViewModel>
+
+@{
+    ViewData["Title"] = "Browse Anime";
+    var selectedGenre = ViewData["SelectedGenre"] as string;
+    var selectedStatus = ViewData["SelectedStatus"] as string;
+    var selectedYear = ViewData["SelectedYear"] as string;
+    var selectedSort = ViewData["SelectedSort"] as string ?? "popularity";
+    var pageTitle = string.IsNullOrEmpty(selectedGenre) ? "Browse All Anime" : $"Browse {selectedGenre} Anime";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-center mb-5">@pageTitle</h1>
+
+        <!-- Filters and Sort -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label">Genre</label>
+                                <select class="form-select" id="browseGenreFilter">
+                                    <option value="">All Genres</option>
+                                    @foreach (var genre in (IEnumerable<AnimeHub.Models.Genre>)ViewData["Genres"])
+                                    {
+                                        <option value="@genre.Name" selected="@(selectedGenre == genre.Name)">@genre.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" id="browseStatusFilter">
+                                    <option value="" selected="@(string.IsNullOrEmpty(selectedStatus))">All Status</option>
+                                    <option value="ongoing" selected="@(selectedStatus == "ongoing")">Ongoing</option>
+                                    <option value="completed" selected="@(selectedStatus == "completed")">Completed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Year</label>
+                                <select class="form-select" id="browseYearFilter">
+                                    <option value="" selected="@(string.IsNullOrEmpty(selectedYear))">All Years</option>
+                                    <option value="2023" selected="@(selectedYear == "2023")">2023</option>
+                                    <option value="2022" selected="@(selectedYear == "2022")">2022</option>
+                                    <option value="2021" selected="@(selectedYear == "2021")">2021</option>
+                                    <option value="2020" selected="@(selectedYear == "2020")">2020</option>
+                                    <option value="2019" selected="@(selectedYear == "2019")">2019</option>
+                                    <option value="older" selected="@(selectedYear == "older")">Older</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Sort By</label>
+                                <select class="form-select" id="browseSortBy">
+                                    <option value="popularity" selected="@(selectedSort == "popularity")">Popularity</option>
+                                    <option value="rating" selected="@(selectedSort == "rating")">Rating</option>
+                                    <option value="year" selected="@(selectedSort == "year")">Year</option>
+                                    <option value="alphabetical" selected="@(selectedSort == "alphabetical")">A-Z</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anime Grid -->
+        @await Html.PartialAsync("_AnimeGrid", Model)
+
+        <!-- Load More Button -->
+        @if ((bool)ViewData["HasMore"])
+        {
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-anime" id="loadMoreBtn" data-page="@((int)ViewData["CurrentPage"] + 1)">Load More Anime</button>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var currentPage = @(ViewData["CurrentPage"] ?? 1);
+
+            // Filter change handlers
+            $('#browseGenreFilter, #browseStatusFilter, #browseYearFilter, #browseSortBy').change(function() {
+                currentPage = 1;
+                applyFilters(true);
+            });
+
+            // Load more handler
+            $(document).on('click', '#loadMoreBtn', function() {
+                currentPage++;
+                applyFilters(false);
+            });
+
+            function applyFilters(replace) {
+                var genre = $('#browseGenreFilter').val();
+                var status = $('#browseStatusFilter').val();
+                var year = $('#browseYearFilter').val();
+                var sort = $('#browseSortBy').val();
+
+                $.get('/Home/GetAnimeGrid', {
+                    genre: genre,
+                    status: status,
+                    year: year,
+                    sort: sort,
+                    page: currentPage
+                }, function(data) {
+                    if (replace) {
+                        $('#browseAnimeGrid').replaceWith(data);
+                        // Update load more button
+                        updateLoadMoreButton(genre, status, year, sort, currentPage + 1);
+                    } else {
+                        // Append new items
+                        var newItems = $(data).find('.col-lg-2, .col-md-3, .col-sm-6');
+                        $('#browseAnimeGrid').append(newItems);
+                        // Update load more button data-page
+                        $('#loadMoreBtn').attr('data-page', currentPage + 1);
+                    }
+                    // Re-bind the action buttons since content is added
+                    bindActionButtons();
+                }).fail(function() {
+                    alert('Error loading anime data');
+                });
+            }
+
+            function updateLoadMoreButton(genre, status, year, sort, nextPage) {
+                // Check if there are more items
+                $.get('/Home/GetAnimeGrid', {
+                    genre: genre,
+                    status: status,
+                    year: year,
+                    sort: sort,
+                    page: nextPage
+                }, function(data) {
+                    if ($(data).find('.col-lg-2, .col-md-3, .col-sm-6').length > 0) {
+                        $('#loadMoreBtn').attr('data-page', nextPage).show();
+                    } else {
+                        $('#loadMoreBtn').hide();
+                    }
+                });
+            }
+
+            function bindActionButtons() {
+                $('.add-to-watchlist').off('click').click(function(e) {
+                    e.preventDefault();
+                    var animeId = $(this).data('anime-id');
+                    var button = $(this);
+
+                    $.post('/Home/AddToWatchlist', { animeId: animeId }, function(response) {
+                        if (response.success) {
+                            button.removeClass('btn-outline-info').addClass('btn-success');
+                            setTimeout(function() {
+                                button.removeClass('btn-success').addClass('btn-outline-info');
+                            }, 2000);
+                        } else {
+                            alert('Error: ' + (response.message || 'Failed to add to watchlist'));
+                        }
+                    }).fail(function() {
+                        alert('Error: Failed to add to watchlist');
+                    });
+                });
+
+                $('.add-to-favorites').off('click').click(function(e) {
+                    e.preventDefault();
+                    var animeId = $(this).data('anime-id');
+                    var button = $(this);
+
+                    $.post('/Home/AddToFavorites', { animeId: animeId }, function(response) {
+                        if (response.success) {
+                            button.removeClass('btn-outline-danger').addClass('btn-danger');
+                            setTimeout(function() {
+                                button.removeClass('btn-danger').addClass('btn-outline-danger');
+                            }, 2000);
+                        } else {
+                            alert('Error: ' + (response.message || 'Failed to add to favorites'));
+                        }
+                    }).fail(function() {
+                        alert('Error: Failed to add to favorites');
+                    });
+                });
+
+                $('.add-to-bookmarks').off('click').click(function(e) {
+                    e.preventDefault();
+                    var animeId = $(this).data('anime-id');
+                    var button = $(this);
+
+                    $.post('/Home/AddToBookmarks', { animeId: animeId }, function(response) {
+                        if (response.success) {
+                            button.removeClass('btn-outline-warning').addClass('btn-warning');
+                            setTimeout(function() {
+                                button.removeClass('btn-warning').addClass('btn-outline-warning');
+                            }, 2000);
+                        } else {
+                            alert('Error: ' + (response.message || 'Failed to add to bookmarks'));
+                        }
+                    }).fail(function() {
+                        alert('Error: Failed to add to bookmarks');
+                    });
+                });
+            }
+
+            // Initial bind
+            bindActionButtons();
+        });
+    </script>
+}

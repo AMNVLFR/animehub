@@ -1,0 +1,502 @@
+@model AnimeHub.Models.Anime
+
+@{
+    ViewData["Title"] = Model.Title + " - Anime Detail";
+
+    // Parse episode count for dynamic display
+    int episodeCount = 25; // default
+    if (Model.EpisodeCount != null && int.TryParse(Model.EpisodeCount.Replace("+", "").Replace("1000", "100"), out int parsedCount))
+    {
+        episodeCount = Math.Min(parsedCount, 100); // Limit to 100 episodes for display
+    }
+
+    // Mock related anime data - in a real app, this would come from the database
+    var relatedAnime = new dynamic[] {
+        new { Title = Model.Title + " Movie", Type = "Movie", PosterUrl = Model.PosterUrl },
+        new { Title = Model.Title + " OVA", Type = "OVA", PosterUrl = Model.PosterUrl },
+        new { Title = Model.Title + " Special", Type = "Special", PosterUrl = Model.PosterUrl }
+    };
+}
+
+<!-- Anime Cover Banner -->
+<section class="anime-cover position-relative">
+    <div class="cover-image" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@Model.CoverUrl') center/cover;">
+        <div class="container h-100 d-flex align-items-end">
+            <div class="row w-100">
+                <div class="col-lg-3 mb-4">
+                    <img src="@Model.PosterUrl" class="poster-img rounded" alt="@Model.Title Poster">
+                </div>
+                <div class="col-lg-9">
+                    <h1 class="display-4 fw-bold text-white mb-3">@Model.Title</h1>
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        <span class="badge bg-anime fs-6">TV Series</span>
+                        <span class="text-white">@Model.Year</span>
+                        <span class="text-white"><i class="fas fa-star text-warning me-1"></i>@Model.Rating</span>
+                        <span class="badge bg-success">@Model.Status</span>
+                    </div>
+                    <p class="lead text-white mb-4">@Model.Synopsis</p>
+                    <div class="d-flex gap-3">
+                        @if (!string.IsNullOrEmpty(Model.TrailerUrl) && AnimeHub.Helpers.VideoHelper.IsValidVideoUrl(Model.TrailerUrl))
+                        {
+                            <a href="@Model.TrailerUrl" target="_blank" class="btn btn-anime btn-lg">
+                                <i class="fas fa-play me-2"></i>Watch Trailer
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-anime btn-lg" disabled>
+                                <i class="fas fa-play me-2"></i>Trailer Not Available
+                            </button>
+                        }
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-light btn-lg add-to-watchlist" data-anime-id="@Model.AnimeId" title="Add to Watchlist">
+                                <i class="fas fa-plus me-2"></i>Add to Watchlist
+                            </button>
+                            <button class="btn btn-outline-light btn-lg add-to-favorites" data-anime-id="@Model.AnimeId" title="Add to Favorites">
+                                <i class="fas fa-heart me-2"></i>Favorites
+                            </button>
+                            <button class="btn btn-outline-light btn-lg add-to-bookmarks" data-anime-id="@Model.AnimeId" title="Add to Bookmarks">
+                                <i class="fas fa-bookmark me-2"></i>Bookmark
+                            </button>
+                        </div>
+                        <button class="btn btn-outline-light btn-lg"><i class="fas fa-share me-2"></i>Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trailer Video -->
+@if (!string.IsNullOrEmpty(Model.TrailerUrl) && AnimeHub.Helpers.VideoHelper.IsValidVideoUrl(Model.TrailerUrl))
+{
+    var embedUrl = AnimeHub.Helpers.VideoHelper.GetEmbedUrl(Model.TrailerUrl);
+    <section class="py-5" style="background-color: #1e1e1e;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h2 class="text-center mb-4" style="color: #ff6b6b;">Official Trailer</h2>
+                    <div class="ratio ratio-16x9">
+                        <iframe src="@embedUrl"
+                                title="@Model.Title Trailer"
+                                allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Comments Section -->
+<section class="py-5">
+    <div class="container">
+        <h3 class="mb-4">
+            Comments (<span id="comment-count">@Model.Comments?.Count ?? 0</span>)
+            <button id="load-comments-btn" class="btn btn-sm btn-outline-anime ms-2">
+                <i class="fas fa-chevron-down me-1"></i>Load Comments
+            </button>
+        </h3>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <!-- Add Comment Form -->
+            <div class="card mb-4" id="comment-form-card" style="display: none;">
+                <div class="card-body">
+                    <h5 class="card-title">Leave a Comment</h5>
+                    <form id="comment-form">
+                        <input type="hidden" name="animeId" value="@Model.AnimeId" />
+                        <div class="mb-3">
+                            <textarea class="form-control" name="content" rows="3" placeholder="Share your thoughts about this anime..." required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-anime" id="submit-comment-btn">
+                                <i class="fas fa-paper-plane me-1"></i>Post Comment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <a href="@Url.Action("Login", "Account", new { area = "Identity" })" class="alert-link">Sign in</a> to leave a comment and join the discussion!
+            </div>
+        }
+
+        <!-- Comments Container -->
+        <div id="comments-container" style="display: none;">
+            <!-- Comments will be loaded here via AJAX -->
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="comments-loading" class="text-center py-4" style="display: none;">
+            <div class="spinner-border text-anime" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading comments...</p>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var animeId = @Model.AnimeId;
+            var currentPage = 1;
+            var isLoading = false;
+
+            // Load comment count and episodes on page load
+            loadCommentCount();
+            loadEpisodes();
+
+            // Watchlist functionality
+            $('.add-to-watchlist').click(function() {
+                var button = $(this);
+                $.post('/Home/AddToWatchlist', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-light').addClass('btn-success');
+                        button.html('<i class="fas fa-check me-2"></i>Added to Watchlist');
+                        setTimeout(function() {
+                            button.removeClass('btn-success').addClass('btn-outline-light');
+                            button.html('<i class="fas fa-plus me-2"></i>Add to Watchlist');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to watchlist'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to watchlist');
+                });
+            });
+
+            // Favorites functionality
+            $('.add-to-favorites').click(function() {
+                var button = $(this);
+                $.post('/Home/AddToFavorites', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-light').addClass('btn-danger');
+                        button.html('<i class="fas fa-heart me-2"></i>Favorited');
+                        setTimeout(function() {
+                            button.removeClass('btn-danger').addClass('btn-outline-light');
+                            button.html('<i class="fas fa-heart me-2"></i>Favorites');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to favorites'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to favorites');
+                });
+            });
+
+            // Bookmarks functionality
+            $('.add-to-bookmarks').click(function() {
+                var button = $(this);
+                $.post('/Home/AddToBookmarks', { animeId: animeId }, function(response) {
+                    if (response.success) {
+                        button.removeClass('btn-outline-light').addClass('btn-warning');
+                        button.html('<i class="fas fa-bookmark me-2"></i>Bookmarked');
+                        setTimeout(function() {
+                            button.removeClass('btn-warning').addClass('btn-outline-light');
+                            button.html('<i class="fas fa-bookmark me-2"></i>Bookmark');
+                        }, 2000);
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to add to bookmarks'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to add to bookmarks');
+                });
+            });
+
+            // Load comments button
+            $('#load-comments-btn').click(function() {
+                var button = $(this);
+                var isLoaded = $('#comments-container').is(':visible');
+
+                if (isLoaded) {
+                    // Collapse comments
+                    $('#comments-container').slideUp();
+                    $('#comment-form-card').slideUp();
+                    button.html('<i class="fas fa-chevron-down me-1"></i>Load Comments');
+                } else {
+                    // Load comments
+                    loadComments();
+                    $('#comment-form-card').slideDown();
+                    button.html('<i class="fas fa-chevron-up me-1"></i>Hide Comments');
+                }
+            });
+
+            // Comment form submission
+            $('#comment-form').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                var submitBtn = $('#submit-comment-btn');
+                var originalText = submitBtn.html();
+
+                submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i>Posting...');
+
+                $.post('/Home/AddComment', formData, function(response) {
+                    if (response.success) {
+                        // Clear form
+                        $('#comment-form textarea').val('');
+                        // Reload comments to show new comment
+                        currentPage = 1;
+                        loadComments();
+                        // Update comment count
+                        loadCommentCount();
+                    } else {
+                        alert('Error: ' + (response.message || 'Failed to post comment'));
+                    }
+                }).fail(function() {
+                    alert('Error: Failed to post comment');
+                }).always(function() {
+                    submitBtn.prop('disabled', false).html(originalText);
+                });
+            });
+
+            function loadCommentCount() {
+                $.get('/Home/GetCommentCount', { animeId: animeId }, function(response) {
+                    $('#comment-count').text(response.count);
+                });
+            }
+
+            function loadEpisodes() {
+                $.get('/Home/GetEpisodes', { animeId: animeId }, function(episodes) {
+                    var html = '';
+
+                    if (episodes.length === 0) {
+                        html = '<div class="text-center py-4 text-muted"><i class="fas fa-video-slash fa-2x mb-3"></i><p>No episodes available yet.</p></div>';
+                    } else {
+                        episodes.forEach(function(episode) {
+                            var playButton = episode.videoUrl ?
+                                '<a href="/Home/WatchEpisode?episodeId=' + episode.episodeId + '" class="btn btn-sm btn-outline-anime me-2"><i class="fas fa-play"></i></a>' :
+                                '<button class="btn btn-sm btn-outline-secondary me-2" disabled><i class="fas fa-lock"></i></button>';
+
+                            var airDate = episode.airDate ? new Date(episode.airDate).toLocaleDateString() : 'TBA';
+
+                            html += `
+                                <div class="episode-item d-flex align-items-center p-3 border-bottom">
+                                    <div class="episode-number me-3">
+                                        <span class="badge bg-anime">${episode.episodeNumber}</span>
+                                    </div>
+                                    <div class="episode-info flex-grow-1">
+                                        <h6 class="mb-1">${episode.title || 'Episode ' + episode.episodeNumber}</h6>
+                                        <small class="text-muted">${episode.duration || '24 min'} • Air Date: ${airDate}</small>
+                                    </div>
+                                    <div class="episode-actions">
+                                        ${playButton}
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    $('#episodes-container').html(html);
+                }).fail(function() {
+                    $('#episodes-container').html('<div class="text-center py-4 text-danger"><i class="fas fa-exclamation-triangle fa-2x mb-3"></i><p>Failed to load episodes.</p></div>');
+                });
+            }
+
+            function loadComments() {
+                if (isLoading) return;
+                isLoading = true;
+
+                $('#comments-loading').show();
+
+                $.get('/Home/GetComments', { animeId: animeId, page: currentPage, pageSize: 10 }, function(response) {
+                    if (currentPage === 1) {
+                        $('#comments-container').empty();
+                    }
+
+                    // Render comments
+                    response.comments.forEach(function(comment) {
+                        var commentHtml = createCommentHtml(comment);
+                        $('#comments-container').append(commentHtml);
+                    });
+
+                    // Show/hide load more button
+                    if (response.hasMore) {
+                        if ($('#load-more-comments').length === 0) {
+                            $('#comments-container').append('<div class="text-center mt-3"><button id="load-more-comments" class="btn btn-outline-anime">Load More Comments</button></div>');
+                        }
+                    } else {
+                        $('#load-more-comments').remove();
+                    }
+
+                    $('#comments-container').show();
+                }).fail(function() {
+                    alert('Error loading comments');
+                }).always(function() {
+                    $('#comments-loading').hide();
+                    isLoading = false;
+                });
+            }
+
+            function createCommentHtml(comment) {
+                var avatarUrl = comment.userAvatar || 'https://png.pngtree.com/png-vector/20250512/ourmid/pngtree-default-avatar-profile-icon-gray-placeholder-vector-png-image_16213764.png';
+                var timeAgo = formatTimeAgo(new Date(comment.createdAt));
+
+                return `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start">
+                                <img src="${avatarUrl}" class="rounded-circle me-3" alt="User Avatar" style="width: 32px; height: 32px;">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0">${comment.userName}</h6>
+                                        <small class="text-muted">${timeAgo}</small>
+                                    </div>
+                                    <p class="mb-2">${escapeHtml(comment.content)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function formatTimeAgo(date) {
+                var now = new Date();
+                var diff = now - date;
+                var minutes = Math.floor(diff / 60000);
+                var hours = Math.floor(diff / 3600000);
+                var days = Math.floor(diff / 86400000);
+
+                if (minutes < 1) return 'Just now';
+                if (minutes < 60) return minutes + ' minutes ago';
+                if (hours < 24) return hours + ' hours ago';
+                return days + ' days ago';
+            }
+
+            function escapeHtml(text) {
+                var map = {
+                    '&': '&',
+                    '<': '<',
+                    '>': '>',
+                    '"': '"',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+            }
+
+            // Load more comments
+            $(document).on('click', '#load-more-comments', function() {
+                currentPage++;
+                loadComments();
+            });
+        });
+    </script>
+}
+
+<!-- Anime Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Synopsis -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="mb-0">Synopsis</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="synopsis-text">@Model.Synopsis</p>
+                    </div>
+                </div>
+
+                <!-- Episodes -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Episodes</h3>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                Season 1
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Season 1</a></li>
+                                <li><a class="dropdown-item" href="#">Season 2</a></li>
+                                <li><a class="dropdown-item" href="#">Season 3</a></li>
+                                <li><a class="dropdown-item" href="#">Season 4</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="episodes-container">
+                            <div class="text-center py-4">
+                                <div class="spinner-border text-anime" role="status">
+                                    <span class="visually-hidden">Loading episodes...</span>
+                                </div>
+                                <p class="mt-2">Loading episodes...</p>
+                            </div>
+                        </div>
+                        <div id="episodes-loading" class="text-center py-4" style="display: none;">
+                            <div class="spinner-border text-anime" role="status">
+                                <span class="visually-hidden">Loading more...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Anime Info -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item mb-3">
+                            <strong>Status:</strong> <span class="badge bg-success">@Model.Status</span>
+                        </div>
+                        <div class="info-item mb-3">
+                            <strong>Episodes:</strong> @Model.EpisodeCount
+                        </div>
+                        <div class="info-item mb-3">
+                            <strong>Duration:</strong> 24 min per episode
+                        </div>
+                        <div class="info-item mb-3">
+                            <strong>Genres:</strong>
+                            <div class="mt-2">
+                                @if (Model.AnimeGenres != null && Model.AnimeGenres.Any())
+                                {
+                                    @foreach (var animeGenre in Model.AnimeGenres)
+                                    {
+                                        <span class="badge bg-secondary me-1 mb-1">@animeGenre.Genre?.Name</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="info-item mb-3">
+                            <strong>Rating:</strong> <i class="fas fa-star text-warning"></i> @Model.Rating/10
+                        </div>
+                        <div class="info-item">
+                            <strong>Studio:</strong> @Model.Studio
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Anime -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Related Anime</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="related-anime">
+                            @foreach (var related in relatedAnime)
+                            {
+                                <div class="related-item d-flex mb-3">
+                                    <img src="@related.PosterUrl" class="me-3 rounded" alt="Related Anime">
+                                    <div>
+                                        <h6 class="mb-1">@related.Title</h6>
+                                        <small class="text-muted">@related.Type</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

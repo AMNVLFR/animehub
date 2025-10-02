@@ -1,0 +1,75 @@
+@model IEnumerable<AnimeHub.Models.Episode>
+
+@{
+    ViewData["Title"] = "Manage Episodes";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Episode Management</h2>
+                    <a href="@Url.Action("CreateEpisode", "Admin")" class="btn btn-anime">
+                        <i class="fas fa-plus"></i> Add New Episode
+                    </a>
+                </div>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Anime</th>
+                                <th>Episode</th>
+                                <th>Title</th>
+                                <th>Air Date</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var episode in Model)
+                            {
+                                <tr>
+                                    <td>@episode.EpisodeId</td>
+                                    <td>@episode.Anime?.Title</td>
+                                    <td>@episode.EpisodeNumber</td>
+                                    <td>@episode.Title</td>
+                                    <td>@episode.AirDate?.ToString("yyyy-MM-dd")</td>
+                                    <td>@episode.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        <a href="@Url.Action("EditEpisode", "Admin", new { id = episode.EpisodeId })" class="btn btn-sm btn-outline-primary me-2">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="@Url.Action("DeleteEpisode", "Admin", new { id = episode.EpisodeId })" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-video fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No episodes found</h4>
+                        <p class="text-muted">Start by adding your first episode.</p>
+                        <a href="@Url.Action("CreateEpisode", "Admin")" class="btn btn-anime">Add Episode</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

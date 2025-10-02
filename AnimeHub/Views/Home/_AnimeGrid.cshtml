@@ -1,0 +1,47 @@
+@model IEnumerable<AnimeHub.Models.AnimeViewModel>
+
+<div class="row" id="browseAnimeGrid">
+    @foreach (var anime in Model)
+    {
+        <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
+            <a href="@Url.Action("Detail", "Home", new { id = anime.Slug })" class="text-decoration-none">
+                <div class="anime-card h-100">
+                    <div class="card-img-container">
+                        <img src="@anime.PosterUrl" class="card-img-top" alt="@anime.Title Poster" loading="lazy">
+                        <div class="card-overlay">
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <i class="fas fa-play-circle fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <h6 class="card-title mb-1">@anime.Title</h6>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="btn-group-sm">
+                                    <button class="btn btn-sm @(anime.IsInFavorites ? "btn-danger" : "btn-outline-danger") me-1 add-to-favorites" data-anime-id="@anime.AnimeId" title="@(anime.IsInFavorites ? "Remove from Favorites" : "Add to Favorites")"><i class="fas fa-heart"></i></button>
+                                    <button class="btn btn-sm @(anime.IsBookmarked ? "btn-warning" : "btn-outline-warning") me-1 add-to-bookmarks" data-anime-id="@anime.AnimeId" title="@(anime.IsBookmarked ? "Remove Bookmark" : "Bookmark")"><i class="fas fa-bookmark"></i></button>
+                                    <button class="btn btn-sm @(anime.IsInWatchlist ? "btn-info" : "btn-outline-info") add-to-watchlist" data-anime-id="@anime.AnimeId" title="@(anime.IsInWatchlist ? "Remove from Watchlist" : "Add to Watchlist")"><i class="fas fa-plus"></i></button>
+                                </div>
+                            }
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted">@anime.EpisodeCount Episodes</small>
+                            <span class="badge @(anime.Status == "Ongoing" ? "bg-success" : "bg-secondary")">@anime.Status</span>
+                        </div>
+                        <div class="genre-tags">
+                              @if (anime.AnimeGenres != null && anime.AnimeGenres.Any())
+                              {
+                                  @foreach (var animeGenre in anime.AnimeGenres.Take(2))
+                                  {
+                                      <span class="badge bg-secondary me-1">@animeGenre.Genre?.Name</span>
+                                  }
+                              }
+                          </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
