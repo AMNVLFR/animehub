@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using AnimeHub.Models;
+using AnimeHub.Helpers;
 using System.Text.Encodings.Web;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,11 +11,13 @@ namespace AnimeHub.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly EmailService _emailService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, EmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -204,10 +207,16 @@ namespace AnimeHub.Controllers
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var resetLink = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
 
-            // In a real application, you would send an email here
-            // For now, we'll just show the reset link in the confirmation view
-            TempData["ResetLink"] = resetLink;
-            TempData["UserEmail"] = user.Email;
+            try
+            {
+                // Send the password reset email
+                await _emailService.SendPasswordResetEmailAsync(user.Email, resetLink);
+            }
+            catch (Exception)
+            {
+                // If email sending fails, still show success to prevent user enumeration
+                // In production, you might want to log this and have a fallback
+            }
 
             return RedirectToAction("ForgotPasswordConfirmation");
         }

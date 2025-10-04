@@ -34,6 +34,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<AnimeHub.Helpers.TmdbService>();
+builder.Services.AddScoped<AnimeHub.Helpers.EmailService>();
 
 var app = builder.Build();
 
