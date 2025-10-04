@@ -101,11 +101,25 @@ public class HomeController : Controller
         // Fetch TMDB data if TmdbId exists
         if (anime.TmdbId.HasValue)
         {
+            _logger.LogInformation("Fetching TMDB data for anime {AnimeId} with TMDB ID {TmdbId}", anime.AnimeId, anime.TmdbId.Value);
             var tmdbDetails = await _tmdbService.GetAnimeDetailsAsync(anime.TmdbId.Value);
             var tmdbImages = await _tmdbService.GetAnimeImagesAsync(anime.TmdbId.Value);
 
+            if (tmdbDetails != null)
+            {
+                _logger.LogInformation("TMDB details fetched successfully for {TmdbId}: {Name}", anime.TmdbId.Value, tmdbDetails.Name);
+            }
+            else
+            {
+                _logger.LogWarning("Failed to fetch TMDB details for {TmdbId}", anime.TmdbId.Value);
+            }
+
             ViewBag.TmdbDetails = tmdbDetails;
             ViewBag.TmdbImages = tmdbImages;
+        }
+        else
+        {
+            _logger.LogInformation("No TMDB ID set for anime {AnimeId}", anime.AnimeId);
         }
 
         return View(anime);
