@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using AnimeHub.Models;
+using System.Text.Encodings.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace AnimeHub.Controllers
 {
@@ -175,5 +177,116 @@ namespace AnimeHub.Controllers
                 return View(user);
             }
         }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                ModelState.AddModelError("", "Email is required.");
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+
+            // Generate password reset token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
+
+            // In a real application, you would send an email here
+            // For now, we'll just show the reset link in the confirmation view
+            TempData["ResetLink"] = resetLink;
+            TempData["UserEmail"] = user.Email;
+
+            return RedirectToAction("ForgotPasswordConfirmation");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            if (token == null || email == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var model = new ResetPasswordViewModel
+            {
+                Token = token,
+                Email = email
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ResetPasswordConfirmation");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ResetPasswordConfirmation");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+    }
+
+    public class ResetPasswordViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        public string Token { get; set; } = "";
+
+        [Required]
+        [StringLength(100, MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; } = "";
     }
 }
