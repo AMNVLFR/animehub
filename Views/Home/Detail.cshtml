@@ -19,8 +19,23 @@
 }
 
 <!-- Anime Cover Banner -->
+@{
+    var coverUrl = Model.CoverUrl;
+    if (ViewBag.TmdbImages != null)
+    {
+        var tmdbImages = ViewBag.TmdbImages as AnimeHub.Helpers.TmdbImages;
+        if (tmdbImages?.Backdrops != null && tmdbImages.Backdrops.Any())
+        {
+            var bestBackdrop = tmdbImages.Backdrops.OrderByDescending(b => b.VoteAverage).FirstOrDefault();
+            if (bestBackdrop != null)
+            {
+                coverUrl = $"https://image.tmdb.org/t/p/w1280{bestBackdrop.FilePath}";
+            }
+        }
+    }
+}
 <section class="anime-cover position-relative">
-    <div class="cover-image" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@Model.CoverUrl') center/cover;">
+    <div class="cover-image" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@coverUrl') center/cover;">
         <div class="container h-100 d-flex align-items-end">
             <div class="row w-100">
                 <div class="col-lg-3 mb-4">
@@ -404,6 +419,39 @@
                         <p class="synopsis-text">@Model.Synopsis</p>
                     </div>
                 </div>
+
+                <!-- TMDB Enhanced Content -->
+                @if (ViewBag.TmdbDetails != null)
+                {
+                    var tmdbDetails = ViewBag.TmdbDetails as AnimeHub.Helpers.TmdbTvDetails;
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="mb-0">TMDB Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Original Title:</strong> @tmdbDetails.OriginalName</p>
+                                    <p><strong>TMDB Rating:</strong> <i class="fas fa-star text-warning"></i> @tmdbDetails.VoteAverage.ToString("F1")/10</p>
+                                    <p><strong>Status:</strong> @tmdbDetails.Status</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Seasons:</strong> @tmdbDetails.NumberOfSeasons</p>
+                                    <p><strong>Episodes:</strong> @tmdbDetails.NumberOfEpisodes</p>
+                                    <p><strong>Genres:</strong>
+                                        @if (tmdbDetails.Genres != null && tmdbDetails.Genres.Any())
+                                        {
+                                            @foreach (var genre in tmdbDetails.Genres)
+                                            {
+                                                <span class="badge bg-secondary me-1">@genre.Name</span>
+                                            }
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
 
                 <!-- Episodes -->
                 <div class="card mb-4">

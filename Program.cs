@@ -31,6 +31,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<AnimeHub.Helpers.TmdbService>();
 
 var app = builder.Build();
 

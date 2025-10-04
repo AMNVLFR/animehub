@@ -5,6 +5,7 @@ using AnimeHub.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using AnimeHub.Helpers;
 
 namespace AnimeHub.Controllers;
 
@@ -13,12 +14,14 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly TmdbService _tmdbService;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, TmdbService tmdbService)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
+        _tmdbService = tmdbService;
     }
 
 
@@ -94,6 +97,17 @@ public class HomeController : Controller
         }
 
         _logger.LogInformation("Found anime: {Title} with slug: {Slug}", anime.Title, anime.Slug);
+
+        // Fetch TMDB data if TmdbId exists
+        if (anime.TmdbId.HasValue)
+        {
+            var tmdbDetails = await _tmdbService.GetAnimeDetailsAsync(anime.TmdbId.Value);
+            var tmdbImages = await _tmdbService.GetAnimeImagesAsync(anime.TmdbId.Value);
+
+            ViewBag.TmdbDetails = tmdbDetails;
+            ViewBag.TmdbImages = tmdbImages;
+        }
+
         return View(anime);
     }
 

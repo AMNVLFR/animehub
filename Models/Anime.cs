@@ -41,6 +41,8 @@ namespace AnimeHub.Models
         [StringLength(500)]
         public string? TrailerUrl { get; set; }
 
+        public int? TmdbId { get; set; }
+
         // Navigation properties
         public ICollection<AnimeGenre> AnimeGenres { get; set; } = new List<AnimeGenre>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();

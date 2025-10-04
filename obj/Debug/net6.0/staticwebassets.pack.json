@@ -1,0 +1,353 @@
+{
+  "Files": [
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\AnimeHub.bundle.scp.css",
+      "PackagePath": "staticwebassets\\AnimeHub.bundle.scp.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\attack_on_titan.jpg",
+      "PackagePath": "staticwebassets\\images\\attack_on_titan.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\attack_on_titan_final.jpg",
+      "PackagePath": "staticwebassets\\images\\attack_on_titan_final.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\bleach.jpg",
+      "PackagePath": "staticwebassets\\images\\bleach.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\boruto.jpg",
+      "PackagePath": "staticwebassets\\images\\boruto.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\chainsaw_man.jpg",
+      "PackagePath": "staticwebassets\\images\\chainsaw_man.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\death note.jpg",
+      "PackagePath": "staticwebassets\\images\\death note.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\demon_slayer.jpg",
+      "PackagePath": "staticwebassets\\images\\demon_slayer.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\dragon_ball.jpg",
+      "PackagePath": "staticwebassets\\images\\dragon_ball.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\dragon_ball_gt.jpg",
+      "PackagePath": "staticwebassets\\images\\dragon_ball_gt.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\dragon_ball_super.jpg",
+      "PackagePath": "staticwebassets\\images\\dragon_ball_super.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\dragon_ball_z.jpg",
+      "PackagePath": "staticwebassets\\images\\dragon_ball_z.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\fairy_tail.jpg",
+      "PackagePath": "staticwebassets\\images\\fairy_tail.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\full_metal_alchemist_brotherhood.jpg",
+      "PackagePath": "staticwebassets\\images\\full_metal_alchemist_brotherhood.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\hunter_x_hunter.jpg",
+      "PackagePath": "staticwebassets\\images\\hunter_x_hunter.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\jujutsu_kaisen.jpg",
+      "PackagePath": "staticwebassets\\images\\jujutsu_kaisen.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\kaiju_no_8.jpg",
+      "PackagePath": "staticwebassets\\images\\kaiju_no_8.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\my_hero_academia.jpg",
+      "PackagePath": "staticwebassets\\images\\my_hero_academia.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\naruto.jpg",
+      "PackagePath": "staticwebassets\\images\\naruto.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\naruto_shippuden.jpg",
+      "PackagePath": "staticwebassets\\images\\naruto_shippuden.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\one_piece.jpg",
+      "PackagePath": "staticwebassets\\images\\one_piece.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\one_punch_man.jpg",
+      "PackagePath": "staticwebassets\\images\\one_punch_man.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\images\\tokyo_ghoul.jpg",
+      "PackagePath": "staticwebassets\\images\\tokyo_ghoul.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "c:\\Users\\Marlo\\Desktop\\website\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.AnimeHub.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.AnimeHub.props",
+      "PackagePath": "build\\AnimeHub.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.AnimeHub.props",
+      "PackagePath": "buildMultiTargeting\\AnimeHub.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.AnimeHub.props",
+      "PackagePath": "buildTransitive\\AnimeHub.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

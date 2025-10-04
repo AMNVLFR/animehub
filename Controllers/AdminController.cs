@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AnimeHub.Data;
 using AnimeHub.Models;
+using AnimeHub.Helpers;
 
 namespace AnimeHub.Controllers
 {
@@ -14,15 +15,18 @@ namespace AnimeHub.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-    
+        private readonly TmdbService _tmdbService;
+
         public AdminController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            TmdbService tmdbService)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _tmdbService = tmdbService;
         }
 
         // GET: Admin
@@ -177,7 +181,7 @@ namespace AnimeHub.Controllers
         // POST: Admin/Animes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAnime([Bind("Title,Slug,Synopsis,Year,Rating,Status,EpisodeCount,Studio,CoverUrl,PosterUrl,TrailerUrl")] Anime anime, int[] selectedGenres)
+        public async Task<IActionResult> CreateAnime([Bind("Title,Slug,Synopsis,Year,Rating,Status,EpisodeCount,Studio,CoverUrl,PosterUrl,TrailerUrl,TmdbId")] Anime anime, int[] selectedGenres)
         {
             if (ModelState.IsValid)
             {
@@ -231,7 +235,7 @@ namespace AnimeHub.Controllers
         // POST: Admin/Animes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAnime(int id, [Bind("AnimeId,Title,Slug,Synopsis,Year,Rating,Status,EpisodeCount,Studio,CoverUrl,PosterUrl,TrailerUrl")] Anime anime, int[] selectedGenres)
+        public async Task<IActionResult> EditAnime(int id, [Bind("AnimeId,Title,Slug,Synopsis,Year,Rating,Status,EpisodeCount,Studio,CoverUrl,PosterUrl,TrailerUrl,TmdbId")] Anime anime, int[] selectedGenres)
         {
             if (id != anime.AnimeId)
             {
@@ -484,6 +488,35 @@ namespace AnimeHub.Controllers
         private bool NewsExists(int id)
         {
             return _context.News.Any(e => e.NewsId == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchTmdb(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return Json(new { results = new List<object>() });
+            }
+
+            var searchResult = await _tmdbService.SearchAnimeAsync(query.Trim());
+            if (searchResult == null)
+            {
+                return Json(new { results = new List<object>() });
+            }
+
+            var results = searchResult.Results.Select(r => new
+            {
+                r.Id,
+                r.Name,
+                r.OriginalName,
+                r.Overview,
+                r.FirstAirDate,
+                r.VoteAverage,
+                PosterUrl = !string.IsNullOrEmpty(r.PosterPath) ? $"https://image.tmdb.org/t/p/w500{r.PosterPath}" : null,
+                BackdropUrl = !string.IsNullOrEmpty(r.BackdropPath) ? $"https://image.tmdb.org/t/p/w1280{r.BackdropPath}" : null
+            }).ToList();
+
+            return Json(new { results });
         }
 
         [HttpPost]

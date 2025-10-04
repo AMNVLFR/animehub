@@ -110,6 +110,13 @@
                         <span asp-validation-for="TrailerUrl" class="text-danger"></span>
                     </div>
 
+                    <div class="mb-3">
+                        <label asp-for="TmdbId" class="form-label">TMDB ID</label>
+                        <input asp-for="TmdbId" class="form-control" type="number" placeholder="e.g., 12345" />
+                        <div class="form-text">Optional: Link to TMDB for enhanced data</div>
+                        <span asp-validation-for="TmdbId" class="text-danger"></span>
+                    </div>
+
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-anime">
                             <i class="fas fa-save"></i> Update Anime
