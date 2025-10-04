@@ -44,7 +44,26 @@ namespace AnimeHub.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                // Add specific error messages based on failure reason
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Account is locked due to too many failed attempts. Please try again later.");
+                }
+                else if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Login is not allowed for this account. Please contact support.");
+                }
+                else if (result.RequiresTwoFactor)
+                {
+                    ModelState.AddModelError("", "Two-factor authentication is required.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect password. Please check your password and try again.");
+                }
+
+                // Add visual feedback for failed login
+                ViewData["LoginFailed"] = true;
                 return View();
             }
         }
