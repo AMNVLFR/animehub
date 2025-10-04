@@ -8,14 +8,14 @@ namespace AnimeHub.Helpers
 {
     public class TmdbService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _apiKey;
         private readonly string _baseUrl;
         private readonly IMemoryCache _cache;
 
-        public TmdbService(HttpClient httpClient, IConfiguration configuration, IMemoryCache cache)
+        public TmdbService(IHttpClientFactory httpClientFactory, IConfiguration configuration, IMemoryCache cache)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
             _apiKey = configuration["Tmdb:ApiKey"];
             _baseUrl = configuration["Tmdb:BaseUrl"];
             _cache = cache;
@@ -23,8 +23,9 @@ namespace AnimeHub.Helpers
 
         public async Task<TmdbSearchResult?> SearchAnimeAsync(string query, string language = "ja")
         {
+            var client = _httpClientFactory.CreateClient();
             var url = $"{_baseUrl}search/tv?api_key={_apiKey}&query={query}&language={language}";
-            var response = await _httpClient.GetAsync(url);
+            var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -41,8 +42,9 @@ namespace AnimeHub.Helpers
                 return cachedResult;
             }
 
+            var client = _httpClientFactory.CreateClient();
             var url = $"{_baseUrl}tv/{tmdbId}?api_key={_apiKey}&language={language}";
-            var response = await _httpClient.GetAsync(url);
+            var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -61,8 +63,9 @@ namespace AnimeHub.Helpers
                 return cachedResult;
             }
 
+            var client = _httpClientFactory.CreateClient();
             var url = $"{_baseUrl}tv/{tmdbId}/images?api_key={_apiKey}";
-            var response = await _httpClient.GetAsync(url);
+            var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
