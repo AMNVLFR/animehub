@@ -568,3 +568,39 @@ iframe {
   border: none !important;
   outline: none !important;
 }
+
+/* Password Requirements Styles */
+#password-requirements {
+  background: #1e1e1e;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  transition: all 0.2s ease;
+}
+
+.requirement i {
+  margin-right: 8px;
+  width: 16px;
+}
+
+.requirement.valid {
+  color: #28a745;
+}
+
+.requirement.invalid {
+  color: #dc3545;
+}
+
+.requirement.valid i {
+  color: #28a745 !important;
+}
+
+.requirement.invalid i {
+  color: #dc3545 !important;
+}
